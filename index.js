@@ -22,6 +22,12 @@ const run = async () => {
             const result = await cursor.limit(6).toArray();
             res.send(result);
         })
+        app.get('/manageInventory', async (req, res) => {
+            const queary = {};
+            const cursor = serviceCollection.find(queary);
+            const result = await cursor.toArray();
+            res.send(result);
+        })
         app.get('/service/:id', async (req, res) => {
             const id = req.params.id;
             const queary = { _id: ObjectId(id) };
