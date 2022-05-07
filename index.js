@@ -49,6 +49,14 @@ const run = async () => {
             const result = await serviceCollection.updateOne(filter, updateDoc, options);
             res.send(result);
         })
+
+        //delete
+        app.delete('/manageInventory/:id', async (req, res) => {
+            const id = req.params.id;
+            const queary = { _id: ObjectId(id) };
+            const result = await serviceCollection.deleteOne(queary);
+            res.send(result);
+        })
     }
     finally {
 
