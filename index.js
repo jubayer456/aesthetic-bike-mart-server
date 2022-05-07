@@ -23,11 +23,22 @@ const run = async () => {
             res.send(result);
         })
         app.get('/manageInventory', async (req, res) => {
-            const queary = {};
-            const cursor = serviceCollection.find(queary);
-            const result = await cursor.toArray();
-            res.send(result);
+            if (req.query.email) {
+                const email = req.query.email;
+                const queary = { email };
+                const cursor = serviceCollection.find(queary);
+                const result = await cursor.toArray();
+                res.send(result);
+            }
+            else {
+                const queary = {};
+                const cursor = serviceCollection.find(queary);
+                const result = await cursor.toArray();
+                res.send(result);
+            }
+
         })
+        //get
         app.get('/service/:id', async (req, res) => {
             const id = req.params.id;
             const queary = { _id: ObjectId(id) };
@@ -55,6 +66,13 @@ const run = async () => {
             const id = req.params.id;
             const queary = { _id: ObjectId(id) };
             const result = await serviceCollection.deleteOne(queary);
+            res.send(result);
+        })
+
+        //post
+        app.post('/manageInventory', async (req, res) => {
+            const newItem = req.body;
+            const result = await serviceCollection.insertOne(newItem);
             res.send(result);
         })
     }
